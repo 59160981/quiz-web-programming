@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit</title>
+</head>
+<body>
+    <form id="form_edit" action="/login/edit/<%= user._id %>" method="post">
+        username : <input type="text" name="username" id="username" value="<%= user.username %>"><span id="alert_username" style="color: red"></span> <br>
+        password : <input type="password" name="password" id="password" value="<%= user.password %>"><span id="alert_password" style="color: red"></span><br>
+        confirm password : <input type="password" name="confirmPassword" id="confirmPassword" value="<%= user.password %>"><span id="alert_confirmPassword" style="color: red"></span><br>
+        first name : <input type="text" name="firstName" id="firstName" value="<%= user.firstName %>"><span id="alert_firstName" style="color: red"></span><br>
+        last name : <input type="text" name="lastName" id="lastName" value="<%= user.lastName %>"><span id="alert_lastName" style="color: red"></span><br>
+        type : <select name="type" id="type">
+            <option value="<%= user.type %>" hidden><%= user.type %></option>
+            <option value="student">นักเรียน</option>
+            <option value="teacher">อาจารย์</option>
+            <option value="admin">เจ้าหน้าที่</option>
+            <option value="none">ไม่ระบุ</option>
+        </select><span id="alert_type" style="color: red"></span>
+    </form>
+    <span id="alert_User" style="color: red"><%= err %></span>
+    <button onclick="checkValue()">OK</button>
+</body>
+<script>
+    function checkValue(){
+        document.getElementById('alert_User').innerHTML="";
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var type = document.getElementById('type').value;
+
+        var pass=0;
+        if(username == ""){
+            document.getElementById('alert_username').innerHTML = "* กรุณากรอก username";
+        }else{
+            pass++;
+            document.getElementById('alert_username').innerHTML = "";
+        }
+
+        if(password == ""){
+            document.getElementById('alert_password').innerHTML = "* กรุณากรอก password";
+        }else{
+            pass++;
+            document.getElementById('alert_password').innerHTML = "";
+        }
+
+        if(confirmPassword != password){
+            document.getElementById('alert_confirmPassword').innerHTML = "* password ไม่ตรงกัน";
+        }else{
+            pass++;
+            document.getElementById('alert_confirmPassword').innerHTML = "";
+        }
+
+        if(firstName == ""){
+            document.getElementById('alert_firstName').innerHTML = "* กรุณากรอก first name";
+        }else{
+            pass++;
+            document.getElementById('alert_firstName').innerHTML = "";
+        }
+
+        if(lastName == ""){
+            document.getElementById('alert_lastName').innerHTML = "* กรุณากรอก last name";
+        }else{
+            pass++;
+            document.getElementById('alert_lastName').innerHTML = "";
+        }
+
+        if(type == ""){
+            document.getElementById('alert_type').innerHTML = "* กรุณาเลือก type";
+        }else{
+            pass++;
+            document.getElementById('alert_type').innerHTML = "";
+        }
+        
+        if(pass == 6){
+            document.getElementById('form_edit').submit();
+        }
+    }
+</script>
+</html>

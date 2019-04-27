@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login</title>
+</head>
+
+<body>
+    <form id="form_login" action="/login" method="post">
+        <h3>login</h3>
+        username : <input type="text" name="username" id="username"> <span id="alert_username"
+            style="color: red"></span> <br>
+        password : <input type="password" name="password" id="password"> <span id="alert_password"
+            style="color: red"></span> <br>
+    </form>
+    <span id="alert_User" style="color: red"><%= err %></span>
+    <button onclick="checkValue()">LOGIN</button>
+    <button onclick="location.href='./register'">Register</button>
+
+    <table width="50%" cellspacing="0" style="border: 1px solid black; margin-top: 5px">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; text-align: center">Username</th>
+                <th style="border: 1px solid black; text-align: center">Password</th>
+                <th style="border: 1px solid black; text-align: center">ชื่อ - นามสกุล</th>
+                <th style="border: 1px solid black; text-align: center">สถานะ</th>
+                <th style="border: 1px solid black; text-align: center">หมายเหตุ</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="border: 1px solid black; text-align: center">Username</th>
+                <th style="border: 1px solid black; text-align: center">Password</th>
+                <th style="border: 1px solid black; text-align: center">ชื่อ - นามสกุล</th>
+                <th style="border: 1px solid black; text-align: center">สถานะ</th>
+                <th style="border: 1px solid black; text-align: center">หมายเหตุ</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            <% for(var i=0; i < user.length; i++) { %>
+            <tr style="border: 1px solid black; text-align: center">
+                <td style="border: 1px solid black; text-align: center"><%= user[i].username %></td>
+                <td style="border: 1px solid black; text-align: center"><%= user[i].password %></td>
+                <td style="border: 1px solid black; text-align: center"><%= user[i].firstName %> <%= user[i].lastName %></td>
+                <td style="border: 1px solid black; text-align: center"><%= user[i].type %></td>
+                <td style="border: 1px solid black; text-align: center">
+                    <a href="login/edit/<%= user[i]._id %>">Edit</a>
+                    <a href="login/delete/<%= user[i]._id %>">Delete</a>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+<script>
+    function checkValue() {
+        document.getElementById('alert_User').innerHTML = "";
+        var pass = 0;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        if (username == "") {
+            document.getElementById('alert_username').innerHTML = "* กรุณากรอกข้อมูล";
+        } else {
+            document.getElementById('alert_username').innerHTML = "";
+            pass++;
+        }
+        if (password == "") {
+            document.getElementById('alert_password').innerHTML = "* กรุณากรอกข้อมูล";
+        } else {
+            document.getElementById('alert_password').innerHTML = "";
+            pass++;
+        }
+
+        if (pass == 2) {
+            document.getElementById('form_login').submit();
+        }
+    }
+</script>
+
+</html>
